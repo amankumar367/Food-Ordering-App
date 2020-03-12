@@ -8,15 +8,18 @@ import com.aman.foodordering.room.entity.Food
 interface FoodDao {
 
     @Insert
-    fun addForm(food: Food)
+    fun addFood(food: Food)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(foods: List<Food>)
 
     @Update
-    fun updateForm(food: Food)
+    fun updateFood(food: Food)
 
-    @Query("SELECT * FROM FORM")
-    fun getAllList(): List<Food>
+    @Query("SELECT * FROM FOOD")
+    fun getAllList(): LiveData<List<Food>>
 
     @Delete
-    fun deleteForm(food: Food)
+    fun deleteFood(food: Food)
 
 }

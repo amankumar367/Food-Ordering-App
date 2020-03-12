@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "form")
+@Entity(tableName = "food")
 @Parcelize
 data class Food(
     @ColumnInfo(name = "title")
@@ -19,10 +19,6 @@ data class Food(
     @SerializedName("description")
     var description: String,
 
-    @ColumnInfo(name = "budget")
-    @SerializedName("budget")
-    var budget: Long,
-
     @ColumnInfo(name = "currency")
     @SerializedName("currency")
     var currency: String,
@@ -31,26 +27,15 @@ data class Food(
     @SerializedName("rate")
     var rate: String,
 
-    @ColumnInfo(name = "payment_mode")
-    @SerializedName("payment_mode")
-    var paymentMode: String,
-
-    @ColumnInfo(name = "start_date")
-    @SerializedName("start_date")
-    var startDate: Long,
-
-    @ColumnInfo(name = "job_term")
-    @SerializedName("job_term")
-    var jobTerm: String
+    @ColumnInfo(name = "quantity")
+    @SerializedName("quantity")
+    var quantity: Int?
 ): Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int = 0
 
-    constructor():this(
-        title ="", description = "", budget = 0L, currency = "",
-        rate = "", paymentMode = "", startDate = 0L, jobTerm = ""
-    )
+    constructor(): this(title ="", description = "", currency = "", rate = "", quantity = 0)
 
 }

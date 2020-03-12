@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Guac de la Costa",
+    "description": "tortillas de mais, fruit de la passion mango",
+    "currency": "€",
+    "rate": "7",
+    "quantity": 0
+  },
+  {
+    "title": "Chicharron y Cerveza",
+    "description": "citro vert / Corona sauce",
+    "currency": "€",
+    "rate": "8",
+    "quantity": 0
+  },
+  {
+    "title": "Chilitos con Car",
+    "description": "padrons tempura, gambas",
+    "currency": "€",
+    "rate": "6",
+    "quantity": 0
+  }
+]

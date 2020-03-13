@@ -11,7 +11,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 
-class SeedDatabaseWorker(
+class DataInitializer(
     context: Context,
     workerParams: WorkerParameters
 ) : Worker(context, workerParams) {
@@ -28,10 +28,11 @@ class SeedDatabaseWorker(
                     database!!.foodDao().insertAll(plantList)
 
                     result = Result.success()
+                    Log.d(TAG, " >>> Data initialization success")
                 }
             }
         } catch (ex: Exception) {
-            Log.e(TAG, "Error seeding database", ex)
+            Log.e(TAG, "Error in data initialization into database", ex)
             result = Result.failure()
         }
 

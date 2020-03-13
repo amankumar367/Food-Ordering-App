@@ -6,12 +6,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.aman.foodordering.room.dao.FoodDao
 import com.aman.foodordering.room.entity.Food
-import com.aman.foodordering.worker.SeedDatabaseWorker
+import com.aman.foodordering.worker.DataInitializer
 
 @Database(entities = [Food::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
@@ -20,7 +19,7 @@ abstract class AppDatabase: RoomDatabase() {
 
     companion object {
         private const val TAG = "AppDatabase"
-        const val DATABASE_NAME = "food_application.db"
+        private const val DATABASE_NAME = "food_application.db"
 
         // Singleton prevents multiple instances of database opening at the
         // same time.
@@ -39,24 +38,14 @@ abstract class AppDatabase: RoomDatabase() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             Log.d(TAG, " >>> DB has been created")
-                            val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build()
+                            val request = OneTimeWorkRequestBuilder<DataInitializer>().build()
                             WorkManager.getInstance(context).enqueue(request)
-                        }
-
-                        override fun onOpen(db: SupportSQLiteDatabase) {
-                            super.onOpen(db)
-                            Log.d(TAG, " >>> DB has been open")
                         }
                     }).build()
                 }
             }
             Log.d(TAG, " >>> Getting the database instance")
             return INSTANCE
-        }
-
-        fun destroyInstance() {
-            Log.d(TAG, " >>> Destroying app database instance")
-            INSTANCE = null
         }
     }
 }

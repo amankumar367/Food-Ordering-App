@@ -7,12 +7,15 @@ import com.aman.foodordering.R
 import com.aman.foodordering.extension.createFactory
 import com.aman.foodordering.repo.OrderRepoI
 import com.aman.foodordering.room.entity.Food
+import com.aman.foodordering.ui.cart.CartFragment
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
+
     @Inject
     lateinit var orderRepoI: OrderRepoI
 
@@ -23,14 +26,7 @@ class MainActivity : DaggerAppCompatActivity() {
         init()
         insetData()
         getAllList()
-    }
-
-    private fun getAllList() {
-        viewModel.getOrderList()
-    }
-
-    private fun insetData() {
-        viewModel.addItem(Food("title", "bsdkjf", "$", "10", 1))
+        onClick()
     }
 
     private fun init() {
@@ -38,6 +34,28 @@ class MainActivity : DaggerAppCompatActivity() {
 
         val factory = MainViewModel(orderRepoI).createFactory()
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+    }
+
+    private fun insetData() {
+        viewModel.addItem(Food("title", "bsdkjf", "$", "10", 1))
+    }
+
+    private fun getAllList() {
+        viewModel.getOrderList()
+    }
+
+    private fun onClick() {
+        view_bottom.setOnClickListener {
+            openNewFormScreen()
+        }
+    }
+
+    private fun openNewFormScreen() {
+        Log.d(TAG, " >>> Opening New From Screen")
+        val instance = CartFragment.newInstance()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainActivity, instance, null)
+            .commit()
     }
 
     companion object {

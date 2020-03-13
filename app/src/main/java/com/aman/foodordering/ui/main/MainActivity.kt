@@ -1,4 +1,4 @@
-package com.aman.foodordering.ui
+package com.aman.foodordering.ui.main
 
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +11,10 @@ import com.aman.foodordering.databinding.ActivityMainBinding
 import com.aman.foodordering.extension.createFactory
 import com.aman.foodordering.repo.OrderRepoI
 import com.aman.foodordering.room.entity.Food
+import com.aman.foodordering.ui.MainViewModel
 import com.aman.foodordering.ui.adapter.FoodAdapter
 import com.aman.foodordering.ui.adapter.OnClickListener
-import com.aman.foodordering.ui.cart.CartFragment
+import com.aman.foodordering.ui.cart.CartActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -90,16 +91,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private fun onClick() {
         view_bottom.setOnClickListener {
-            openNewFormScreen()
+            CartActivity.start(this)
         }
-    }
-
-    private fun openNewFormScreen() {
-        Log.d(TAG, " >>> Opening Cart Screen")
-        val instance = CartFragment.newInstance()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainActivity, instance, null)
-            .commit()
     }
 
     companion object {

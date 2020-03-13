@@ -1,7 +1,7 @@
 package com.aman.foodordering.di
 
-import com.aman.foodordering.ui.MainActivity
-import com.aman.foodordering.ui.cart.CartFragment
+import com.aman.foodordering.ui.main.MainActivity
+import com.aman.foodordering.ui.cart.CartActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,6 +12,6 @@ abstract class ActivityBuilderModule {
     abstract fun mainActivityProvider() : MainActivity
 
     @ContributesAndroidInjector
-    abstract fun cartFragmentProvider() : CartFragment
+    abstract fun cartActivityProvider() : CartActivity
 
 }

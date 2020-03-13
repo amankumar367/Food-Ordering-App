@@ -2,6 +2,15 @@
 <resources>
     <dimen name="bottom_view">65dp</dimen>
 
+    // Add to cart button
     <dimen name="plus_minus_width">100dp</dimen>
     <dimen name="plus_minus_height">35dp</dimen>
+
+    // Toolbar
+    <dimen name="tall_toolbar_height">120dp</dimen>
+
+    // Card view
+    <dimen name="card_width">335dp</dimen>
+    <dimen name="card_height">142dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
 </resources>

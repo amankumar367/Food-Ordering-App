@@ -15,4 +15,10 @@
     <string name="card_subtitle">5.0 (200+) | ALL days : 09:00 AM - 06:00 PM</string>
     <string name="card_contact">Reach us at : 9854562142</string>
     <string name="book_table">BOOK A TABLE</string>
+
+    <string name="place_order">PLACE ORDER</string>
+    <string name="review_orders">Review Orders</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="total_price">€%s</string>
+    <string name="my_cart">My Cart</string>
 </resources>

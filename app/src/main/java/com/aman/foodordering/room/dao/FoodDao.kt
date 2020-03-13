@@ -16,6 +16,9 @@ interface FoodDao {
     @Query("SELECT * FROM FOOD")
     fun getAllList(): LiveData<List<Food>>
 
+    @Query("SELECT * FROM FOOD WHERE quantity > 0")
+    fun getCartList(): LiveData<List<Food>>
+
     @Delete
     fun deleteFood(food: Food)
 

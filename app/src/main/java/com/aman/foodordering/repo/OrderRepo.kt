@@ -18,6 +18,16 @@ class OrderRepo(private val db: AppDatabase): OrderRepoI {
         }
     }
 
+    override fun getCartItem(): Single<LiveData<List<Food>>> {
+        return Single.create { emitter ->
+            try {
+                emitter.onSuccess(db.foodDao().getCartList())
+            } catch (e: Exception) {
+                emitter.onError(e)
+            }
+        }
+    }
+
     override fun getAllItem(): Single<LiveData<List<Food>>> {
         return Single.create { emitter ->
             try {

@@ -7,5 +7,7 @@ import io.reactivex.Single
 interface OrderRepoI {
     fun update(food: Food): Single<String>
 
+    fun getCartItem(): Single<LiveData<List<Food>>>
+
     fun getAllItem(): Single<LiveData<List<Food>>>
 }

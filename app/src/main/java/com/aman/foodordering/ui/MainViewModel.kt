@@ -34,9 +34,30 @@ class MainViewModel(private val orderRepoI: OrderRepoI): ViewModel() {
     }
 
     fun getOrderList() {
-        state = state.copy(loading = true)
+        Log.d(TAG, " >>> Received call to get order list")
+        state = state.copy(loading = true, success = false, failure = false)
         compositeDisposable.add(
             orderRepoI.getAllItem()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    observableList = it
+                    state = state.copy(loading = false, success = true, failure = false)
+                },{
+                    state = state.copy(
+                        loading = false,
+                        failure = true,
+                        success = false,
+                        message = it.localizedMessage)
+                })
+        )
+    }
+
+    fun getCartList() {
+        Log.d(TAG, " >>> Received call to get cart list")
+        state = state.copy(loading = true, success = false, failure = false)
+        compositeDisposable.add(
+            orderRepoI.getCartItem()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

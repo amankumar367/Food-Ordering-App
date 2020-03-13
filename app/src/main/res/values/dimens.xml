@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="bottom_view">65dp</dimen>
+
+    <dimen name="plus_minus_width">100dp</dimen>
+    <dimen name="plus_minus_height">35dp</dimen>
 </resources>

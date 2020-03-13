@@ -1,6 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data class ="FoodDataBinding">
+        <import type="android.view.View"/>
+
+        <variable
+            name="shouldShowAddButton"
+            type="Boolean" />
+
+        <variable
+            name="shouldPlusMinusButton"
+            type="Boolean" />
+
+        <variable
+            name="food"
+            type="com.aman.foodordering.room.entity.Food" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@{food.title}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Guac de la Costa" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-light"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:ems="16"
+            android:lines="1"
+            android:text="@{food.description}"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:text="tortillas de mais, fruit de la passion mango" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/item_color"
+            android:text="@{food.currency + food.rate}"
+            app:layout_constraintStart_toStartOf="@+id/tv_description"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            tools:text="€ 8" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/plus_minus_height"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/item_color"
+            android:text="@string/add"
+            android:visibility="@{shouldShowAddButton ? View.VISIBLE : View.GONE}"
+            android:textColor="@android:color/background_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="@{shouldPlusMinusButton ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:constraint_referenced_ids="view_plus_minus,tv_minus,tv_item_count,tv_plus" />
+
+        <View
+            android:id="@+id/view_plus_minus"
+            android:layout_width="@dimen/plus_minus_width"
+            android:layout_height="@dimen/plus_minus_height"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_plus_minus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif-thin"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/minus"
+            android:textSize="44sp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_plus_minus"
+            app:layout_constraintStart_toStartOf="@+id/view_plus_minus"
+            app:layout_constraintTop_toTopOf="@+id/view_plus_minus" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:textSize="16sp"
+            android:text="@{food.quantity.toString()}"
+            app:layout_constraintBottom_toBottomOf="@+id/view_plus_minus"
+            app:layout_constraintTop_toTopOf="@+id/view_plus_minus"
+            app:layout_constraintStart_toStartOf="@+id/view_plus_minus"
+            app:layout_constraintEnd_toEndOf="@+id/view_plus_minus"
+            tools:text="10"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="sans-serif-thin"
+            android:padding="8dp"
+            android:text="@string/plus"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_plus_minus"
+            app:layout_constraintEnd_toEndOf="@+id/view_plus_minus"
+            app:layout_constraintTop_toTopOf="@+id/view_plus_minus" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

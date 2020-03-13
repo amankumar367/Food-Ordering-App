@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Order Food</string>
+
+    // Errors
+    <string name="error_message">Something went wrong at out end</string>
+    <string name="retry">Retry</string>
+
+    // Cart Item
+    <string name="add">ADD</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="cart_item">VIEW CART (%s ITEMS)</string>
 </resources>

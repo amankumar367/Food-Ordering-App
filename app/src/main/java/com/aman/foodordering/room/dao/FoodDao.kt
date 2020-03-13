@@ -7,9 +7,6 @@ import com.aman.foodordering.room.entity.Food
 @Dao
 interface FoodDao {
 
-    @Insert
-    fun addFood(food: Food)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(foods: List<Food>)
 

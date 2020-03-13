@@ -1,41 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mainActivity"
-    tools:context=".ui.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View" />
 
-    <View
-        android:id="@+id/view_bottom"
+        <variable
+            name="totalItem"
+            type="String" />
+
+        <variable
+            name="state"
+            type="com.aman.foodordering.ui.MainState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_view"
-        android:background="@drawable/bg_bottom_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/mainActivity"
+        tools:context=".ui.MainActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/view_bottom"
-        app:layout_constraintHorizontal_bias="0.32"
-        app:layout_constraintStart_toStartOf="@+id/view_bottom"
-        app:layout_constraintTop_toTopOf="@+id/view_bottom"
-        app:srcCompat="@drawable/ic_cart" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{state.success ? View.VISIBLE : View.GONE}">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="VIEW CART (5 ITEMS)"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_cart"
-        app:layout_constraintStart_toEndOf="@+id/iv_cart"
-        app:layout_constraintTop_toTopOf="@+id/iv_cart" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_food"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/view_bottom"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
+            <View
+                android:id="@+id/view_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bottom_view"
+                android:background="@drawable/bg_bottom_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+                app:layout_constraintEnd_toEndOf="@+id/view_bottom"
+                app:layout_constraintHorizontal_bias="0.32"
+                app:layout_constraintStart_toStartOf="@+id/view_bottom"
+                app:layout_constraintTop_toTopOf="@+id/view_bottom"
+                app:srcCompat="@drawable/ic_cart" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@{String.format(@string/cart_item, totalItem)}"
+                android:textColor="@android:color/background_light"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_cart"
+                app:layout_constraintStart_toEndOf="@+id/iv_cart"
+                app:layout_constraintTop_toTopOf="@+id/iv_cart" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_thin"
+            android:text="@string/error_message"
+            android:textColor="@android:color/background_dark"
+            android:textSize="56sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35000002" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:background="@color/colorAccent"
+            android:text="@string/retry"
+            android:textColor="@android:color/background_light"
+            app:layout_constraintEnd_toEndOf="@+id/tv_error_message"
+            app:layout_constraintStart_toStartOf="@+id/tv_error_message"
+            app:layout_constraintTop_toBottomOf="@+id/tv_error_message" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{state.failure ? View.VISIBLE : View.GONE}"
+            app:constraint_referenced_ids="tv_error_message,btn_retry" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{state.loading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

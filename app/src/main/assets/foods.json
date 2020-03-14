@@ -19,5 +19,19 @@
     "currency": "€",
     "rate": "6",
     "quantity": 0
+  },
+  {
+    "title": "Pimientos de Padron",
+    "description": "Bierzo Enxebre, Santiago de Compostela",
+    "currency": "€",
+    "rate": "16",
+    "quantity": 0
+  },
+  {
+    "title": "Leche frita",
+    "description": "Casa Alvarez, Madrid",
+    "currency": "€",
+    "rate": "2",
+    "quantity": 0
   }
 ]

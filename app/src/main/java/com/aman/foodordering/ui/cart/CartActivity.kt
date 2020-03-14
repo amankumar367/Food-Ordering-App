@@ -67,7 +67,14 @@ class CartActivity : DaggerAppCompatActivity() {
 
     private fun observeList() {
         viewModel.observableList.observe(this, Observer {
-            adapter.result = it
+            cartList = it
+            if (it.size > 2) {
+                adapter.result = listOf(it[0], it[1])
+                binding.shouldShowMore = true
+            } else {
+                adapter.result = cartList
+                binding.shouldShowMore = false
+            }
             adapter.notifyDataSetChanged()
             calculateTotalPrice(it)
         })
@@ -97,6 +104,11 @@ class CartActivity : DaggerAppCompatActivity() {
 
     private fun onClicks() {
         view_place_order_bottom.setOnClickListener {  }
+        tv_show_more.setOnClickListener {
+            binding.shouldShowMore = false
+            adapter.result = cartList
+            adapter.notifyDataSetChanged()
+        }
         btn_back.setOnClickListener { onBackPressed() }
     }
 

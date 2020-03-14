@@ -21,4 +21,6 @@
     <string name="total_cost">Total Cost</string>
     <string name="total_price">€%s</string>
     <string name="my_cart">My Cart</string>
+    <string name="show_more"><u>Show more</u></string>
+    <string name="show_less"><u>Show less</u></string>
 </resources>

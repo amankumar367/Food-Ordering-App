@@ -26,7 +26,7 @@ class FoodAdapter(var result: List<Food>,
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        holder.bind(result[position])
+        holder.bind(result[position], position)
         holder.setIsRecyclable(false)
     }
 
@@ -34,7 +34,7 @@ class FoodAdapter(var result: List<Food>,
                                private val listener: OnClickListener)
         : RecyclerView.ViewHolder(foodDataBinding.root) {
 
-        fun bind(food: Food) {
+        fun bind(food: Food, position: Int) {
             foodDataBinding.food = food
             if (food.quantity == 0) {
                 foodDataBinding.shouldShowAddButton = true
@@ -43,22 +43,22 @@ class FoodAdapter(var result: List<Food>,
                 foodDataBinding.shouldShowAddButton = false
                 foodDataBinding.shouldPlusMinusButton = true
             }
-            onClick(food)
+            onClick(food, position)
         }
 
-        private fun onClick(food: Food) {
+        private fun onClick(food: Food, position: Int) {
             foodDataBinding.root.tv_plus.setOnClickListener {
                 if (food.quantity == 20) return@setOnClickListener
                 food.quantity = food.quantity!!.inc()
-                listener.update(food)
+                listener.update(food, position)
             }
             foodDataBinding.root.tv_minus.setOnClickListener {
                 food.quantity = food.quantity!!.dec()
-                listener.update(food)
+                listener.update(food, position)
             }
             foodDataBinding.root.btn_add.setOnClickListener {
                 food.quantity = food.quantity!!.inc()
-                listener.update(food)
+                listener.update(food, position)
             }
         }
     }

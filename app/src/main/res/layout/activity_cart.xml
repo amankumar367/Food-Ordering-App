@@ -103,6 +103,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:theme="@style/ToolBarStyle"
                     app:elevation="0dp"
+                    app:contentInsetStart="0dp"
                     app:layout_collapseMode="pin">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -119,10 +120,9 @@
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="1"
-                        android:paddingStart="12dp"
                         android:text="@string/my_cart"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:visibility="visible" />
 
                 </androidx.appcompat.widget.Toolbar>
@@ -190,11 +190,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{state.loading ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="@{state.loading ? View.VISIBLE : View.GONE}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"

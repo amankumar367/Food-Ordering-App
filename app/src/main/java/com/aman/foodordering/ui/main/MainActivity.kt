@@ -1,6 +1,7 @@
 package com.aman.foodordering.ui.main
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.aman.foodordering.R
 import com.aman.foodordering.databinding.ActivityMainBinding
 import com.aman.foodordering.extension.createFactory
+import com.aman.foodordering.extension.observeOnce
 import com.aman.foodordering.repo.OrderRepoI
 import com.aman.foodordering.room.entity.Food
 import com.aman.foodordering.ui.MainViewModel
@@ -28,6 +30,8 @@ class MainActivity : DaggerAppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private var foodList: List<Food> = listOf()
+
+    private var itemPosition: Int = 0
 
     @Inject
     lateinit var orderRepoI: OrderRepoI
@@ -56,9 +60,13 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private fun setObserver() {
         viewModel.observableState.observe(this, Observer {
-            binding.state = it
             if (it.success) {
+                Handler().postDelayed({
+                    binding.state = it
+                }, 700)
                 observeList()
+            } else {
+                binding.state = it
             }
         })
     }
@@ -66,7 +74,7 @@ class MainActivity : DaggerAppCompatActivity() {
     private fun observeList() {
         viewModel.observableList.observe(this, Observer {
             adapter.result = it
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemChanged(itemPosition)
             calculateTotalItem(it)
         })
     }
@@ -82,17 +90,24 @@ class MainActivity : DaggerAppCompatActivity() {
     private fun setRecyclerView() {
         rv_food.layoutManager = LinearLayoutManager(this)
         adapter = FoodAdapter(foodList, object : OnClickListener{
-            override fun update(food: Food) {
+            override fun update(food: Food, position: Int) {
+                itemPosition = position
                 viewModel.updateItem(food)
             }
         })
         rv_food.adapter = adapter
+        rv_food.itemAnimator = null
     }
 
     private fun onClick() {
         view_bottom.setOnClickListener {
             CartActivity.start(this)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
     }
 
     companion object {

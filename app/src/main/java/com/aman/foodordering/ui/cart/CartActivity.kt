@@ -3,6 +3,7 @@ package com.aman.foodordering.ui.cart
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -29,6 +30,8 @@ class CartActivity : DaggerAppCompatActivity() {
     private lateinit var binding: ActivityCartBinding
 
     private var cartList: List<Food> = listOf()
+
+    private var itemPosition: Int = 0
 
     @Inject
     lateinit var orderRepoI: OrderRepoI
@@ -58,9 +61,13 @@ class CartActivity : DaggerAppCompatActivity() {
 
     private fun setObserver() {
         viewModel.observableState.observe(this, Observer {
-            binding.state = it
             if (it.success) {
+                Handler().postDelayed({
+                    binding.state = it
+                }, 700)
                 observeList()
+            } else {
+                binding.state = it
             }
         })
     }
@@ -75,7 +82,7 @@ class CartActivity : DaggerAppCompatActivity() {
                 adapter.result = cartList
                 binding.shouldShowMore = false
             }
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemChanged(itemPosition)
             calculateTotalPrice(it)
         })
     }
@@ -95,11 +102,13 @@ class CartActivity : DaggerAppCompatActivity() {
     private fun setRecyclerView() {
         rv_cart.layoutManager = LinearLayoutManager(this)
         adapter = FoodAdapter(cartList, object : OnClickListener {
-            override fun update(food: Food) {
+            override fun update(food: Food, position: Int) {
+                itemPosition = position
                 viewModel.updateItem(food)
             }
         })
         rv_cart.adapter = adapter
+        rv_cart.itemAnimator = null
     }
 
     private fun onClicks() {

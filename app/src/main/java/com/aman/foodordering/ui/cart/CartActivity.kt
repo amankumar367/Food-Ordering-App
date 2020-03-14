@@ -61,29 +61,25 @@ class CartActivity : DaggerAppCompatActivity() {
 
     private fun setObserver() {
         viewModel.observableState.observe(this, Observer {
-            if (it.success) {
-                Handler().postDelayed({
-                    binding.state = it
-                }, 700)
-                observeList()
-            } else {
-                binding.state = it
-            }
-        })
-    }
+            when {
+                it.success -> {
+                    Handler().postDelayed({
+                        binding.state = it
+                    }, 700)
 
-    private fun observeList() {
-        viewModel.observableList.observe(this, Observer {
-            cartList = it
-            if (it.size > 2) {
-                adapter.result = listOf(it[0], it[1])
-                binding.shouldShowMore = true
-            } else {
-                adapter.result = cartList
-                binding.shouldShowMore = false
+                    cartList = it.list!!
+                    if (cartList.size > 2) {
+                        adapter.result = listOf(cartList[0], cartList[1])
+                        binding.shouldShowMore = true
+                    } else {
+                        adapter.result = cartList
+                        binding.shouldShowMore = false
+                    }
+                    adapter.notifyItemChanged(itemPosition)
+                    calculateTotalPrice(cartList)
+                }
+                else -> binding.state = it
             }
-            adapter.notifyItemChanged(itemPosition)
-            calculateTotalPrice(it)
         })
     }
 

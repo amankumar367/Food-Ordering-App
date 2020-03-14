@@ -67,6 +67,7 @@ dependencies {
     def vRoom = '2.2.3'
     implementation "androidx.room:room-runtime:$vRoom"
     implementation "androidx.room:room-ktx:$vRoom"
+    implementation "androidx.room:room-rxjava2:$vRoom"
     kapt "androidx.room:room-compiler:$vRoom"
     androidTestImplementation "androidx.room:room-testing:$vRoom"
 

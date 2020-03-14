@@ -60,22 +60,18 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private fun setObserver() {
         viewModel.observableState.observe(this, Observer {
-            if (it.success) {
-                Handler().postDelayed({
-                    binding.state = it
-                }, 700)
-                observeList()
-            } else {
-                binding.state = it
-            }
-        })
-    }
+            when {
+                it.success -> {
+                    Handler().postDelayed({
+                        binding.state = it
+                    }, 700)
 
-    private fun observeList() {
-        viewModel.observableList.observe(this, Observer {
-            adapter.result = it
-            adapter.notifyItemChanged(itemPosition)
-            calculateTotalItem(it)
+                    adapter.result = it.list!!
+                    adapter.notifyItemChanged(itemPosition)
+                    calculateTotalItem(it.list!!)
+                }
+                else -> binding.state = it
+            }
         })
     }
 

@@ -14,8 +14,6 @@ class MainViewModel(private val orderRepoI: OrderRepoI): ViewModel() {
 
     var observableState: MutableLiveData<MainState> = MutableLiveData()
 
-    lateinit var observableList: LiveData<List<Food>>
-
     private val compositeDisposable = CompositeDisposable()
 
     private var state = MainState()
@@ -35,14 +33,13 @@ class MainViewModel(private val orderRepoI: OrderRepoI): ViewModel() {
 
     fun getOrderList() {
         Log.d(TAG, " >>> Received call to get order list")
-        state = state.copy(loading = true, success = false, failure = false)
+        state = state.copy(loading = true, success = false, failure = false, list = null)
         compositeDisposable.add(
             orderRepoI.getAllItem()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    observableList = it
-                    state = state.copy(loading = false, success = true, failure = false)
+                    state = state.copy(loading = false, success = true, failure = false, list = it)
                 },{
                     state = state.copy(
                         loading = false,
@@ -55,14 +52,13 @@ class MainViewModel(private val orderRepoI: OrderRepoI): ViewModel() {
 
     fun getCartList() {
         Log.d(TAG, " >>> Received call to get cart list")
-        state = state.copy(loading = true, success = false, failure = false)
+        state = state.copy(loading = true, success = false, failure = false, list = null)
         compositeDisposable.add(
             orderRepoI.getCartItem()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    observableList = it
-                    state = state.copy(loading = false, success = true, failure = false)
+                    state = state.copy(loading = false, success = true, failure = false, list = it)
                 },{
                     state = state.copy(
                         loading = false,
